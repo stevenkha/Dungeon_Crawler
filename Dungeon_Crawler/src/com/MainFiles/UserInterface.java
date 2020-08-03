@@ -21,6 +21,8 @@ public class UserInterface {
         GAME:
         while (true) {
             Random rand = new Random();
+            
+            //iterate through every mob available in the Mobs class
             for (int i = 0; i < mobs.getMobs().size(); i++) {
 
                 Characters mob = mobs.getMobs().get(i);
@@ -61,6 +63,7 @@ public class UserInterface {
                 System.out.println("Press enter to continue down the dungeon");
                 scan.nextLine();
 
+                //keep track of progress though dungeon to trigger special events
                 progressTracker++;
                 switch(progressTracker){
                     case 3:
