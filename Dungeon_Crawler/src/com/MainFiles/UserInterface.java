@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class UserInterface {
     public static void main(String[] args) {
+
         Scanner scan = new Scanner(System.in);
         int progressTracker = 0;
         Hero hero = new Hero();
@@ -21,8 +22,7 @@ public class UserInterface {
         GAME:
         while (true) {
             Random rand = new Random();
-            
-            //iterate through every mob available in the Mobs class
+            //iterate through every mob available within the Mobs class
             for (int i = 0; i < mobs.getMobs().size(); i++) {
 
                 Characters mob = mobs.getMobs().get(i);
@@ -63,7 +63,7 @@ public class UserInterface {
                 System.out.println("Press enter to continue down the dungeon");
                 scan.nextLine();
 
-                //keep track of progress though dungeon to trigger special events
+                //keep track of the progress made through the dungeon to start special events
                 progressTracker++;
                 switch(progressTracker){
                     case 3:
@@ -89,15 +89,18 @@ public class UserInterface {
                         scan.nextLine();
                         int foundPotions = rand.nextInt(5-1) + 1;
                         System.out.println("You found " + foundPotions + " potions!");
-                        hero.setPotionCount(hero.getPotionAmount() + foundPotions);
+                        hero.setPotionCount(foundPotions);
                         scan.nextLine();
                         System.out.println("You see a fallen corpse by an ominous door holding a legendary sword");
                         scan.nextLine();
                         System.out.println("You take the sword from the fallen corpse and prepare for the boss that awaits within");
                         hero.getWeapon().nameModifier("Legendary Sword");
-                        hero.getWeapon().damageModifier(30, 15);
+                        hero.getWeapon().damageModifier(45, 15);
                         scan.nextLine();
                         break;
+                    case 9:
+                        System.out.println("Congratulations! You made it through the dungeon");
+                        break GAME;
                 }
 
             }//for loop
@@ -121,11 +124,12 @@ public class UserInterface {
 
                 break;
             case 2:
-                if (((Hero) hero).getPotionAmount() > 0) {
-                    hero.drinkPotion(1);
+                hero.drinkPotion(1);
+                System.out.println();
+                if (((Hero) hero).getPotionAmount() > 0 && !((Hero) hero).isHealthMax()) {
                     System.out.println("You used a potion!");
                     System.out.println();
-                } else {
+                } else if (((Hero) hero).getPotionAmount() == 0) {
                     System.out.println("You have no potions left\n");
                 }
                 break;
@@ -135,8 +139,8 @@ public class UserInterface {
                 Random rand = new Random();
                 int successChance = rand.nextInt(100);
                     if (successChance >= 70) {
-                        System.out.println("You successfully counter the " + mob.getName() + ". It takes " + (mobAttack+10) + " damage\n");
-                        mob.damaged(mobAttack+10);
+                        System.out.println("You successfully counter the " + mob.getName() + ". It takes " + (mobAttack+5) + " damage\n");
+                        mob.damaged(mobAttack+5);
                     } else {
                         System.out.println("You fail to counter the incoming attack and take " + mobAttack + " damage\n");
                         hero.damaged(mobAttack);
@@ -150,9 +154,5 @@ public class UserInterface {
     public static boolean isDead(Characters character) {
         return character.getHealth() <= 0;
     }
-
-        /*
-            Find solution to error from pressing space when prompted to pick a command
-        */
 
 }
