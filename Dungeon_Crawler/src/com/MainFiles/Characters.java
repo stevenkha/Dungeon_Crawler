@@ -35,7 +35,6 @@ public class Characters {
     }
 
     public void drinkPotion(int amount) {
-        int numberOfPotions = amount;
         if (this.health == 100) {
             System.out.println("Health already at max");
         } else if (this.health + 10 > 100) {

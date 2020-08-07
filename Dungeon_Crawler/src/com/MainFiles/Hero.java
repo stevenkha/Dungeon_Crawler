@@ -39,11 +39,7 @@ public class Hero extends Characters {
     }
 
     public boolean isHealthMax() {
-        if (super.getHealth() == 100) {
-            return true;
-        }
-
-        return false;
+        return super.getHealth() == 100;
     }
 
     public int getPotionAmount() {
